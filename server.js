@@ -6,9 +6,13 @@ require('dotenv').config();
 app.use(express.json());   
 const PORT=process.env.PORT || 3000;
 
+const {jwtAuthMiddleware}=require('./jwt')
+
 const userRoutes=require('./routes/userRoutes');
+const candidateRoutes=require('./routes/candidateRoutes');
 
 app.use('/user',userRoutes);
+app.use('/candidate',jwtAuthMiddleware,candidateRoutes);
 
 app.listen(PORT, () => {
   console.log('Server is running on http://localhost:3000')
