@@ -12,7 +12,7 @@ const userRoutes=require('./routes/userRoutes');
 const candidateRoutes=require('./routes/candidateRoutes');
 
 app.use('/user',userRoutes);
-app.use('/candidate',jwtAuthMiddleware,candidateRoutes);
+app.use('/candidate',candidateRoutes);
 
 app.listen(PORT, () => {
   console.log('Server is running on http://localhost:3000')
