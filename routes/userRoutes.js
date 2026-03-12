@@ -1,7 +1,8 @@
 const express=require('express');
 const router=express.Router();
 const User=require('./../models/user.js')
-const {jwtAuthMiddleware,generateToken}=require('./../jwt')
+const {jwtAuthMiddleware,generateToken}=require('./../jwt');
+const Candidate = require('../models/candidate.js');
 
 router.post('/signup',async(req,res)=>{
   try{
@@ -106,4 +107,23 @@ router.put('/profile/password',jwtAuthMiddleware,async(req,res)=>{
     }
 })
 
+
+// lets start votin
+router.post('./vote/:candidateId',jwtAuthMiddleware,async(req,res)=>{
+  //no adimin can vote
+  //user can only vote once
+
+  const candidateId=req.params.candidateId;
+  const userId=req.user.id;
+
+  try{
+    const candidate=await Candidate.findById(candidateId);
+    if(!candidate){
+      return res.status(404).json({message:"Candidate not found"});
+    }
+
+  }catch(err){
+    
+  }
+})
 module.exports=router;
